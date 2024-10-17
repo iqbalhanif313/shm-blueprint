@@ -461,7 +461,7 @@ SELECT
     a.data AS sensor_data,
     s.avg_data,
     s.std_data,
-    s.upper_threshold,
+    s.u[README.md](..%2F..%2Fconfluent-benchmark%2FREADME.md)pper_threshold,
     s.lower_threshold,
     CASE
         WHEN a.data > s.upper_threshold THEN 'upper_threshold_exceeded'

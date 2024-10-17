@@ -13,8 +13,8 @@ sudo mkswap /swapfile
 sudo swapon /swapfile
 
 cd /home/ubuntu
-git clone https://github.com/iqbalhanif313/thesis.git
-cd thesis
+git clone https://github.com/iqbalhanif313/shm-blueprint.git
+cd shm-blueprint
 
 # Use predefined IP addresses
 BROKER1_IP="${broker1_private_ip}"
@@ -26,14 +26,14 @@ KSQLDB_PRIVATE_IP="${ksqldb_private_ip}"
 KSQLDB2_PRIVATE_IP="${ksqldb2_private_ip}"
 
 # Update docker-compose.yml for Broker 1 with dynamic IPs and node ID
-sed -i "s/kafka1/$BROKER1_IP/g" /home/ubuntu/thesis/docker/control-center.yaml
-sed -i "s/kafka2/$BROKER2_IP/g" /home/ubuntu/thesis/docker/control-center.yaml
-sed -i "s/kafka3/$BROKER3_IP/g" /home/ubuntu/thesis/docker/control-center.yaml
-sed -i "s/schema-registry/$SCHEMA_REGISTRY_IP/g" /home/ubuntu/thesis/docker/control-center.yaml
-sed -i "s/connect-server/$CONNECT_PRIVATE_IP/g" /home/ubuntu/thesis/docker/control-center.yaml
-sed -i "s/ksqldb-server/$KSQLDB_PRIVATE_IP/g" /home/ubuntu/thesis/docker/control-center.yaml
-sed -i "s/ksqldb2-server/$KSQLDB2_PRIVATE_IP/g" /home/ubuntu/thesis/docker/control-center.yaml
+sed -i "s/kafka1/$BROKER1_IP/g" /home/ubuntu/shm-blueprint/deployment/docker/control-center.yaml
+sed -i "s/kafka2/$BROKER2_IP/g" /home/ubuntu/shm-blueprint/deployment/docker/control-center.yaml
+sed -i "s/kafka3/$BROKER3_IP/g" /home/ubuntu/shm-blueprint/deployment/docker/control-center.yaml
+sed -i "s/schema-registry/$SCHEMA_REGISTRY_IP/g" /home/ubuntu/shm-blueprint/deployment/docker/control-center.yaml
+sed -i "s/connect-server/$CONNECT_PRIVATE_IP/g" /home/ubuntu/shm-blueprint/deployment/docker/control-center.yaml
+sed -i "s/ksqldb-server/$KSQLDB_PRIVATE_IP/g" /home/ubuntu/shm-blueprint/deployment/docker/control-center.yaml
+sed -i "s/ksqldb2-server/$KSQLDB2_PRIVATE_IP/g" /home/ubuntu/shm-blueprint/deployment/docker/control-center.yaml
 
 
 # Run the service
-sudo docker-compose -f /home/ubuntu/thesis/docker/control-center.yaml up -d
+sudo docker-compose -f /home/ubuntu/shm-blueprint/deployment/docker/control-center.yaml up -d

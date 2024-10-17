@@ -13,8 +13,8 @@ sudo mkswap /swapfile
 sudo swapon /swapfile
 
 cd /home/ubuntu
-git clone https://github.com/iqbalhanif313/thesis.git
-cd thesis
+git clone https://github.com/iqbalhanif313/shm-blueprint.git
+cd shm-blueprint
 
 # Use predefined IP addresses
 BROKER1_IP="${broker1_private_ip}"
@@ -34,13 +34,13 @@ else
 fi
 
 # Update docker-compose.yml for Broker 1 with dynamic IPs and node ID
-sed -i "s/kafka1/$BROKER1_IP/g" /home/ubuntu/thesis/docker/broker.yaml
-sed -i "s/kafka2/$BROKER2_IP/g" /home/ubuntu/thesis/docker/broker.yaml
-sed -i "s/kafka3/$BROKER3_IP/g" /home/ubuntu/thesis/docker/broker.yaml
-sed -i "s/local_listener/$LISTENER_IP/g" /home/ubuntu/thesis/docker/broker.yaml
+sed -i "s/kafka1/$BROKER1_IP/g" /home/ubuntu/shm-blueprint/deployment/docker/broker.yaml
+sed -i "s/kafka2/$BROKER2_IP/g" /home/ubuntu/shm-blueprint/deployment/docker/broker.yaml
+sed -i "s/kafka3/$BROKER3_IP/g" /home/ubuntu/shm-blueprint/deployment/docker/broker.yaml
+sed -i "s/local_listener/$LISTENER_IP/g" /home/ubuntu/shm-blueprint/deployment/docker/broker.yaml
 
-sed -i 's/KAFKA_NODE_ID: 1/KAFKA_NODE_ID: ${broker_id}/' /home/ubuntu/thesis/docker/broker.yaml
+sed -i 's/KAFKA_NODE_ID: 1/KAFKA_NODE_ID: ${broker_id}/' /home/ubuntu/shm-blueprint/deployment/docker/broker.yaml
 
 
 # Run the service
-sudo docker-compose -f /home/ubuntu/thesis/docker/broker.yaml up -d
+sudo docker-compose -f /home/ubuntu/shm-blueprint/deployment/docker/broker.yaml up -d

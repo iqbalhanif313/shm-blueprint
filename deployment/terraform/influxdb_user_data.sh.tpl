@@ -13,9 +13,9 @@ sudo mkswap /swapfile
 sudo swapon /swapfile
 
 cd /home/ubuntu
-git clone https://github.com/iqbalhanif313/thesis.git
-cd thesis
+git clone https://github.com/iqbalhanif313/shm-blueprint.git
+cd shm-blueprint
 
 
 # Run the service
-sudo docker-compose -f /home/ubuntu/thesis/docker/influxdb.yaml up -d
+sudo docker-compose -f /home/ubuntu/shm-blueprint/deployment/docker/influxdb.yaml up -d
