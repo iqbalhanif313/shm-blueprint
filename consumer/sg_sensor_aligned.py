@@ -8,7 +8,7 @@ from confluent_kafka.serialization import StringDeserializer
 # Configuration for Kafka Consumer
 consumer_conf = {
     'bootstrap.servers': 'localhost:9092',        # Kafka broker
-    'group.id': 'sg-consumer-group',         # Consumer group ID
+    'group.id': 'acc-consumer-group',         # Consumer group ID
     'auto.offset.reset': 'earliest',              # Start from earliest message
     'enable.auto.commit': False,                   # Commit offsets automatically
 }
@@ -19,10 +19,10 @@ schema_registry_conf = {
 }
 
 # Topic to listen to
-topic = 'FUSED_SG_SENSOR_ALERTS'
+topic = 'SENSOR_SG_ALIGNED'
 
 # Output CSV file path
-output_file = 'sg_sensor_alerts.csv'
+output_file = 'sg_sensor_aligned.csv'
 
 # Create a Schema Registry client
 schema_registry_client = SchemaRegistryClient(schema_registry_conf)
@@ -64,7 +64,7 @@ with open(output_file, mode='a', newline='') as csv_file:
     csv_writer = csv.writer(csv_file)
     # Write the header only if the file does not exist
     if not file_exists:
-        csv_writer.writerow(['TIMESTAMP', 'SG_SENSOR', 'SG_DATA', 'SG_STATUS','UPPER_THRESHOLD','LOWER_THRESHOLD','VIBRATION_DATA','TEMPERATURE_DATA','FOG_PRESENCE_DATA','WEATHER_ALERT_DATA' ])  # Modify these headers based on your schema
+        csv_writer.writerow(['TIMESTAMP','DATA', 'SENSOR'])  # Modify these headers based on your schema
 
 try:
     while True:
@@ -92,15 +92,8 @@ try:
             csv_writer = csv.writer(csv_file)
             csv_writer.writerow([
                     value.get('TIMESTAMP', 'None'),
-                    value.get('SG_SENSOR', 'None'),
-                    value.get('SG_DATA', 'None'),
-                    value.get('SG_STATUS', 'None'),
-                    value.get('UPPER_THRESHOLD', 'None'),
-                    value.get('LOWER_THRESHOLD', 'None'),
-                    value.get('VIBRATION_DATA', 'None'),
-                    value.get('TEMPERATURE_DATA', 'None'),
-                    value.get('FOG_PRESENCE_DATA', 'None'),
-                    value.get('WEATHER_ALERT_DATA', 'None'),
+                    value.get('DATA', 'None'),
+                    value.get('SENSOR', 'None'),
                 ])
 
 # Handle keyboard interrupt

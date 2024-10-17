@@ -6,7 +6,7 @@ import seaborn as sns
 sns.set(style="whitegrid")
 
 # Read the CSV file and remove leading/trailing spaces from column headers
-df = pd.read_csv('../sg_sensor_alerts2x.csv')
+df = pd.read_csv('../sg_sensor_alerts_to_used.csv')
 df.columns = df.columns.str.strip()  # Remove leading/trailing spaces from column names
 
 # Check column names to verify

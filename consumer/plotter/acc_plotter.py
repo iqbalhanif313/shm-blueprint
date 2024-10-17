@@ -5,75 +5,45 @@ import seaborn as sns
 # Set Seaborn style for better aesthetics
 sns.set(style="whitegrid")
 
-# Step 1: Read the CSV file
-df = pd.read_csv('../acc_sensor_alerts2x.csv')
+# Read the first CSV file (output data)
+df1 = pd.read_csv('../acc_sensor_alerts.csv')
 
-# Step 2: Inspect the Data (Optional)
-print("First few rows of the dataset:")
-print(df.head())
+# Convert 'TIMESTAMP' to datetime format in the first CSV
+df1['TIMESTAMP'] = pd.to_datetime(df1['TIMESTAMP'], errors='coerce')
 
-# Step 3: Data Cleaning
-# Ensure 'ACC_DATA' is numeric. If not, convert and handle errors.
-df['ACC_DATA'] = pd.to_numeric(df['ACC_DATA'], errors='coerce')
+# Ensure 'ACC_DATA' is numeric and drop NaN values
+df1['ACC_DATA'] = pd.to_numeric(df1['ACC_DATA'], errors='coerce')
+df1 = df1.dropna(subset=['ACC_SENSOR', 'ACC_DATA'])
 
-# Drop rows with NaN in 'ACC_SENSOR' or 'ACC_DATA'
-df = df.dropna(subset=['ACC_SENSOR', 'ACC_DATA'])
+# Read the second CSV file for comparison (input data)
+df2 = pd.read_csv('../acc_sensor_aligned.csv')
 
-# Step 4: Classify Data by 'ACC_SENSOR'
-# Create separate DataFrames for A1 and A2
-df_A1 = df[df['ACC_SENSOR'] == 'A1']
-df_A2 = df[df['ACC_SENSOR'] == 'A2']
+# Convert 'TIMESTAMP' to datetime format in the second CSV
+df2['TIMESTAMP'] = pd.to_datetime(df2['TIMESTAMP'], errors='coerce')
 
-# Optional: Print counts to verify
-print("\nCounts by ACC_SENSOR:")
-print(df['ACC_SENSOR'].value_counts())
+# Ensure 'DATA' is numeric and drop NaN values
+df2['DATA'] = pd.to_numeric(df2['DATA'], errors='coerce')
+df2 = df2.dropna(subset=['SENSOR', 'DATA'])
 
-# Step 5: Plot the Distribution of 'ACC_DATA' for each sensor separately
+# Sort the second CSV by 'TIMESTAMP' before plotting
+df2 = df2.sort_values(by='TIMESTAMP')
 
-# Plot 1: Histogram for A1
+# Plot the distribution of output (ACC_DATA) in a histogram with KDE
 plt.figure(figsize=(10, 6))
-sns.histplot(df_A1['ACC_DATA'], color='blue', kde=True, stat="density", bins=30, alpha=0.6)
-plt.title('Distribution of ACC_DATA for A1 Sensor')
+sns.histplot(df1['ACC_DATA'], kde=True, color='blue', bins=30, label='Output Data (ACC_DATA)', kde_kws={'linewidth': 2})
 plt.xlabel('ACC_DATA')
 plt.ylabel('Density')
+plt.title('Distribution of Output Data (ACC_DATA)')
+plt.legend()
+plt.tight_layout()
 plt.show()
 
-# Plot 2: Histogram for A2
+# Plot the distribution of input (DATA from second CSV) in a histogram with KDE
 plt.figure(figsize=(10, 6))
-sns.histplot(df_A2['ACC_DATA'], color='orange', kde=True, stat="density", bins=30, alpha=0.6)
-plt.title('Distribution of ACC_DATA for A2 Sensor')
-plt.xlabel('ACC_DATA')
+sns.histplot(df2['DATA'], kde=True, color='purple', bins=30, label='Input Data (Comparison)', kde_kws={'linewidth': 2})
+plt.xlabel('Input Data')
 plt.ylabel('Density')
-plt.show()
-
-# Plot 3: Boxplot for A1
-plt.figure(figsize=(8, 6))
-sns.boxplot(x='ACC_SENSOR', y='ACC_DATA', data=df_A1, palette='Set2')
-plt.title('Boxplot of ACC_DATA for A1 Sensor')
-plt.xlabel('ACC_SENSOR')
-plt.ylabel('ACC_DATA')
-plt.show()
-
-# Plot 4: Boxplot for A2
-plt.figure(figsize=(8, 6))
-sns.boxplot(x='ACC_SENSOR', y='ACC_DATA', data=df_A2, palette='Set2')
-plt.title('Boxplot of ACC_DATA for A2 Sensor')
-plt.xlabel('ACC_SENSOR')
-plt.ylabel('ACC_DATA')
-plt.show()
-
-# Plot 5: Violin Plot for A1
-plt.figure(figsize=(8, 6))
-sns.violinplot(x='ACC_SENSOR', y='ACC_DATA', data=df_A1, palette='Set3')
-plt.title('Violin Plot of ACC_DATA for A1 Sensor')
-plt.xlabel('ACC_SENSOR')
-plt.ylabel('ACC_DATA')
-plt.show()
-
-# Plot 6: Violin Plot for A2
-plt.figure(figsize=(8, 6))
-sns.violinplot(x='ACC_SENSOR', y='ACC_DATA', data=df_A2, palette='Set3')
-plt.title('Violin Plot of ACC_DATA for A2 Sensor')
-plt.xlabel('ACC_SENSOR')
-plt.ylabel('ACC_DATA')
+plt.title('Distribution of Input Data (Comparison)')
+plt.legend()
+plt.tight_layout()
 plt.show()

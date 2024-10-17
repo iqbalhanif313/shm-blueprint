@@ -64,7 +64,7 @@ with open(output_file, mode='a', newline='') as csv_file:
     csv_writer = csv.writer(csv_file)
     # Write the header only if the file does not exist
     if not file_exists:
-        csv_writer.writerow(['TIMESTAMP','ACC_SENSOR', 'ACC_DATA', 'ACC_STATUS','VIBRATION_DATA','TEMPERATURE_DATA','FOG_PRESENCE_DATA','WEATHER_ALERT_DATA' ])  # Modify these headers based on your schema
+        csv_writer.writerow(['TIMESTAMP','ACC_SENSOR', 'ACC_DATA', 'ACC_STATUS','UPPER_THRESHOLD','LOWER_THRESHOLD','VIBRATION_DATA','TEMPERATURE_DATA','FOG_PRESENCE_DATA','WEATHER_ALERT_DATA' ])  # Modify these headers based on your schema
 
 try:
     while True:
@@ -95,10 +95,12 @@ try:
                     value.get('ACC_SENSOR', 'None'),
                     value.get('ACC_DATA', 'None'),
                     value.get('ACC_STATUS', 'None'),
+                    value.get('UPPER_THRESHOLD', 'None'),
+                    value.get('LOWER_THRESHOLD', 'None'),
                     value.get('VIBRATION_DATA', 'None'),
                     value.get('TEMPERATURE_DATA', 'None'),
                     value.get('FOG_PRESENCE_DATA', 'None'),
-                    value.get('WEATHER_ALERT_DATA', 'None')
+                    value.get('WEATHER_ALERT_DATA', 'None'),
                 ])
 
 # Handle keyboard interrupt

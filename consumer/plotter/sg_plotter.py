@@ -6,7 +6,7 @@ import seaborn as sns
 sns.set(style="whitegrid")
 
 # Step 1: Read the CSV file
-df = pd.read_csv('../sg_sensor_alerts2x.csv')
+df = pd.read_csv('../sg_sensor_alerts2x_backup.csv')
 
 # Step 2: Inspect the Data (Optional)
 print("First few rows of the dataset:")
