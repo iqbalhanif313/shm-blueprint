@@ -6,7 +6,7 @@ import seaborn as sns
 sns.set(style="whitegrid")
 
 # Read the first CSV file
-df1 = pd.read_csv('../sg_sensor_alerts.csv')
+df1 = pd.read_csv('../sg_sensor_alerts_final.csv')
 
 # Convert 'TIMESTAMP' to datetime format in the first CSV
 df1['TIMESTAMP'] = pd.to_datetime(df1['TIMESTAMP'], errors='coerce')
@@ -16,7 +16,7 @@ df1['SG_DATA'] = pd.to_numeric(df1['SG_DATA'], errors='coerce')
 df1 = df1.dropna(subset=['SG_SENSOR', 'SG_DATA'])
 
 # Read the second CSV file for comparison
-df2 = pd.read_csv('../sg_sensor_aligned.csv')
+df2 = pd.read_csv('../sg_sensor_aligned_final.csv')
 
 # Convert 'TIMESTAMP' to datetime format in the second CSV
 df2['TIMESTAMP'] = pd.to_datetime(df2['TIMESTAMP'], errors='coerce')
